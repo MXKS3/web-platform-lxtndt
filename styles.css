@@ -1,0 +1,332 @@
+/* Seu CSS existente aqui */
+
+/* Estilos para o menu */
+.navigation {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column; /* Alterado para abrir na vertical */
+}
+
+.navigation__checkbox {
+  display: none;
+}
+
+.navigation__button {
+  background-color: gold; /* Alterada a cor para combinar com o seu código */
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Adicionei uma transição de cor */
+  margin-bottom: 1rem; /* Espaçamento entre o botão e a lista vertical */
+}
+
+.navigation__button:hover {
+  background-color: #ffdb58; /* Alterada a cor de hover para combinar com o seu código */
+}
+
+.navigation__icon {
+  position: relative;
+  margin-top: 0.5rem; /* Ajustado o espaçamento do ícone */
+  background-color: black; /* Alterada a cor do ícone para combinar com o seu código */
+  width: 2rem;
+  height: 2px;
+  display: inline-block;
+}
+
+.navigation__nav {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 0;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex; /* Alterado para abrir na vertical */
+  flex-direction: column; /* Alterado para abrir na vertical */
+  align-items: flex-end; /* Alinhar à direita */
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com transparência */
+}
+
+.navigation__list {
+  list-style: none;
+  padding: 0;
+  text-align: right;
+  margin: 0;
+}
+
+.navigation__item {
+  margin: 1rem 0;
+}
+
+.navigation__link {
+  color: gold; /* Alterada a cor para combinar com o seu código */
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.4rem;
+  transition: color 0.3s ease; /* Adicionei uma transição de cor */
+}
+
+.navigation__link:hover {
+  color: #ffdb58; /* Alterada a cor de hover para combinar com o seu código */
+}
+
+/* Font import. */
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
+
+/* VARIABLES. */
+/* SCSS variable for timing function. */
+$ease: cubic-bezier(0.3, 0.8, 0.5, 0.5);
+
+/* CSS variable for color. */
+:root {
+  --primary: 280, 95%; /* primary color */
+  --secondary: 265, 95%; /* secondary color */
+  --neutral-50: hsla(265, 49%, 92%, 1);
+  --neutral-100: hsla(265, 89%, 62%, 1);
+  --neutral-200: hsla(265, 49%, 32%, 1);
+}
+
+/* PAGE STYLING. */
+* {
+  font-family: "Hanken Grotesk", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: hsla(var(--secondary), 2%, 1);
+  background-image: radial-gradient(
+      hsla(var(--secondary), 3%, 1) 20%,
+      transparent 20%
+  );
+  background-position: 0 0;
+  background-size: 2rem 2rem;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: clamp(0.6rem, 0.4rem + 0.4vw, 0.8rem);
+  font-weight: 500;
+}
+
+h4 {
+  font-size: clamp(0.8rem, 0.1rem + 1.4vw, 1.5rem);
+}
+
+p {
+  font-size: clamp(0.6rem, 0.4rem + 0.4vw, 0.8rem);
+}
+
+/* CENTER CONTENT. */
+.content {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.cards {
+  display: grid;
+  width: calc(100% - 30%);
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  gap: 1rem;
+  margin: auto;
+}
+
+/* CARD SHINE EFFECT MIXIN. */
+@mixin shine-effect($size, $color) {
+  &::before,
+  &::after {
+      border-radius: inherit;
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      transition: opacity 0.5s $ease;
+  }
+
+  &::before {
+      opacity: 0;
+      background: radial-gradient(
+          $size circle at var(--mouse-x) var(--mouse-y),
+          $color,
+          transparent 50%
+      );
+  }
+
+  &::after {
+      opacity: 0;
+      background: radial-gradient(
+          $size / 3 circle at var(--mouse-x) var(--mouse-y),
+          $color,
+          transparent 40%
+      );
+      filter: blur(6rem);
+      z-index: -1;
+      transition-duration: 1s;
+  }
+
+  &:hover::before,
+  &:hover::after {
+      opacity: 1;
+  }
+}
+
+/* CARD STYLING. */
+.cards:hover > .card::before {
+  opacity: 1;
+}
+
+.card {
+  position: relative;
+  border-radius: 0.5rem;
+  height: 256px;
+  background-color: hsla(var(--secondary), 10%, 1);
+  transition: $ease all 0.2s;
+  background-image: radial-gradient(
+      hsla(var(--secondary), 3%, 1) 20%,
+      transparent 20%
+  );
+  background-position: 0 0;
+  background-size: 2rem 2rem;
+  box-shadow: 0px 0px 0px 4px hsla(var(--secondary), 5%, 0);
+  &:hover {
+      box-shadow: 0px 0px 0px 4px hsla(var(--secondary), 5%, 1);
+  }
+  &:active {
+      transform: scale(0.98);
+  }
+  &__background {
+      position: absolute;
+      border-radius: inherit;
+      inset: 1px;
+      background: hsla(var(--secondary), 5%, 1) 0%;
+  }
+
+  &__background-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      content: "";
+      background: radial-gradient(
+          256px circle at var(--mouse-x) var(--mouse-y),
+          hsla(var(--primary), 5%, 1) 0%,
+          hsla(var(--secondary), 5%, 1) 100%
+      );
+      opacity: 0;
+      transition: $ease all 0.7s;
+  }
+  &:hover &__background-glow {
+      opacity: 1;
+  }
+
+  &__content {
+      position: relative;
+      height: 100%;
+      padding: 2rem;
+      overflow: hidden;
+      user-select: none;
+  }
+  &__title {
+      padding-bottom: 1rem;
+      color: var(--neutral-100);
+      font-family: 'Space Mono', monospace; /* Adicionei a fonte Space Mono */
+  }
+
+  &__description {
+      color: var(--neutral-200);
+      height: 4rem;
+      white-space: pre-line;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'Space Mono', monospace; /* Adicionei a fonte Space Mono */
+  }
+
+  &__btn {
+      position: absolute;
+      bottom: 0;
+      margin-bottom: 2rem;
+  }
+
+  @include shine-effect(
+      384px,
+      hsla(var(--secondary), 45%, 1)
+  );
+}
+
+/* OPTIONAL. */
+/* shine-effect mixin. */
+@mixin button-shine($color) {
+  &::before {
+      content: "";
+      position: absolute;
+      background: linear-gradient(90deg, transparent, $color, transparent);
+      width: 1.5rem;
+      height: 1px;
+      top: 0;
+      opacity: 0.5;
+      transform: translateX(0%);
+  }
+  &:hover::before {
+      opacity: 1;
+      transform: translateX(var(--mouse-x));
+  }
+  &:not(:hover)::before {
+      transition: all 1s $ease;
+  }
+}
+
+/* Button styling. */
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  background: radial-gradient(
+      circle at 50% 100%,
+      hsla(var(--primary), 50%, 1) 0%,
+      hsla(var(--secondary), 50%, 1) 100%
+  );
+  color: var(--neutral-50);
+  border-radius: 2rem;
+  padding: 0.8rem 1.5rem;
+  transition: $ease all 0.2s;
+  box-shadow: 0px 0px 0px 4px hsla(var(--secondary), 25%, 0);
+  &:hover {
+      box-shadow: 0px 0px 0px 4px hsla(var(--secondary), 25%, 1);
+  }
+  &::after {
+      content: "";
+      position: absolute;
+      background: inherit;
+      filter: blur(4rem);
+      inset: -2px;
+      opacity: 0.2;
+      transition: $ease all 0.5s;
+  }
+  &:hover::after {
+      opacity: 0.5;
+  }
+  &:active {
+      transform: scale(0.9);
+  }
+  @include button-shine(hsla(var(--secondary), 85%, 1));
+}
+
+/* RESPONSIVNESS. */
+@media screen and (max-width: 1000px) {
+  .cards {
+      grid-template-columns: repeat(1, 1fr);
+  }
+}
